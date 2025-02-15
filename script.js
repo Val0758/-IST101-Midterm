@@ -19,52 +19,52 @@
     Note: This project is adapted from a public project. Original credits go to the respective author(s).
 -->
 */
-const smallCups = document.querySelectorAll('.cup-small')
-const liters = document.getElementById('liters')
-const percentage = document.getElementById('percentage')
-const remained = document.getElementById('remained')
+const smallCups = document.querySelectorAll('.cup-small');
+const liters = document.getElementById('liters');
+const percentage = document.getElementById('percentage');
+const remained = document.getElementById('remained');
 
-updateBigCup()
+updateBigCup();
 
 smallCups.forEach((cup, idx) => {
-    cup.addEventListener('click', () => highlightCups(idx))
-})
+    cup.addEventListener('click', () => highlightCups(idx));
+});
 
 function highlightCups(idx) {
     if (idx === 7 && smallCups[idx].classList.contains("full")) idx--;
     else if (smallCups[idx].classList.contains('full') && !smallCups[idx].nextElementSibling.classList.contains('full')) {
-        idx--
+        idx--;
     }
 
     smallCups.forEach((cup, idx2) => {
         if (idx2 <= idx) {
-            cup.classList.add('full')
+            cup.classList.add('full');
         } else {
-            cup.classList.remove('full')
+            cup.classList.remove('full');
         }
-    })
+    });
 
-    updateBigCup()
+    updateBigCup();
 }
 
 function updateBigCup() {
-    const fullCups = document.querySelectorAll('.cup-small.full').length
-    const totalCups = smallCups.length
+    const fullCups = document.querySelectorAll('.cup-small.full').length;
+    const totalCups = smallCups.length;
 
     if (fullCups === 0) {
-        percentage.style.visibility = 'hidden'
-        percentage.style.height = 0
+        percentage.style.visibility = 'hidden';
+        percentage.style.height = 0;
     } else {
-        percentage.style.visibility = 'visible'
-        percentage.style.height = `${fullCups / totalCups * 330}px`
-        percentage.innerText = `${fullCups / totalCups * 1000}%`
+        percentage.style.visibility = 'visible';
+        percentage.style.height = `${(fullCups / totalCups) * 330}px`;
+        percentage.innerText = `${(fullCups / totalCups) * 100}%`; // ✅ Corrección del porcentaje
     }
 
     if (fullCups === totalCups) {
-        remained.style.visibility = 'hidden'
-        remained.style.height = 0
+        remained.style.visibility = 'hidden';
+        remained.style.height = 0;
     } else {
-        remained.style.visibility = 'visible'
-        liters.innerText = `${1 - (50 * fullCups / 1000)}L`
+        remained.style.visibility = 'visible';
+        liters.innerText = `${2 - (fullCups * 0.25)}L`; // ✅ Corrección del cálculo del agua restante
     }
 }
